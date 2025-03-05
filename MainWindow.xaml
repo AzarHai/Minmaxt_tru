@@ -1,0 +1,76 @@
+﻿<Window x:Class="MinimaxAlphaBeta.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Минимакс с Альфа-Бета Отсечениями" Height="600" Width="1157">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхний блок с параметрами -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <TextBlock Text="Глубина:" Margin="5"/>
+                <ComboBox x:Name="DepthComboBox" Width="50" SelectedIndex="2">
+                    <ComboBoxItem Content="1"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem Content="4"/>
+                </ComboBox>
+                <TextBlock Text="Диапазон потомков:" Margin="5"/>
+                <TextBox x:Name="MinBranchTextBox" Width="30" Text="1" Margin="5"/>
+                <TextBlock Text="до"/>
+                <TextBox x:Name="MaxBranchTextBox" Width="30" Text="4" Margin="5"/>
+                <Button Content="Построить дерево" Margin="5" Click="OnBuildTreeClick"/>
+            </StackPanel>
+
+            <TextBlock Text="Первый игрок:" Margin="5"/>
+            <ComboBox x:Name="FirstPlayerComboBox" Width="100">
+                <ComboBoxItem Content="MAX" IsSelected="True"/>
+                <ComboBoxItem Content="MIN"/>
+            </ComboBox>
+            <ComboBox x:Name="OrderComboBox" Width="120" Margin="5">
+                <ComboBoxItem Content="Слева-направо" IsSelected="True"/>
+                <ComboBoxItem Content="Справа-налево"/>
+            </ComboBox>
+            <Button Content="Запустить алгоритм" Margin="5" Click="OnRunAlgorithmClick"/>
+
+            <!-- Легенда -->
+            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                <Rectangle Width="20" Height="20" Fill="LightBlue" Margin="5"/>
+                <TextBlock Text="MAX" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <Rectangle Width="20" Height="20" Fill="LightPink" Margin="5"/>
+                <TextBlock Text="MIN" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Новая кнопка -->
+            <Button Content="В главное меню" Margin="10,0,0,0" Click="OnNewButtonClick"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <!-- Поле ввода потомков -->
+            <StackPanel x:Name="BranchingInputPanel" Orientation="Vertical" Margin="10" Width="300" HorizontalAlignment="Left"
+                Panel.ZIndex="1"/>
+            <!-- Текстбокс для условий отсечения -->
+            <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Right" Margin="10" Width="300" Panel.ZIndex="1">
+                <TextBlock Text="Отсечения:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="PruningConditionsTextBox" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" IsReadOnly="True" Height="200"/>
+            </StackPanel>
+
+            <!-- ScrollViewer для Canvas -->
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Panel.ZIndex="0">
+                <Canvas x:Name="RootCanvas">
+                    <Canvas x:Name="TreeCanvas" Background="Transparent" Width="348" Height="453" MouseWheel="TreeCanvas_MouseWheel" Canvas.Left="443" Canvas.Top="112">
+                        <Canvas.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform x:Name="TreeScaleTransform" ScaleX="0.5" ScaleY="0.5"/>
+                                <TranslateTransform x:Name="TreeTranslateTransform" X="0" Y="0"/>
+                            </TransformGroup>
+                        </Canvas.RenderTransform>
+                    </Canvas>
+                </Canvas>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>
